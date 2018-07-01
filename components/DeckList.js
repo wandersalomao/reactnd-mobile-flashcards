@@ -1,24 +1,25 @@
 import React from 'react'
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Image, Platform } from 'react-native'
+// import { Text, View, FlatList, TouchableOpacity, Image, Platform } from 'react-native'
+import { FlatList, TouchableOpacity, Platform } from 'react-native'
 import { white, gray } from '../utils/colors'
+import styled from 'styled-components'
 
 export default class App extends React.Component {
 
     keyExtractor = (item, index) => item.deck
 
     renderItem = ({ item }) => (
-        <View style={styles.item}>
-            <TouchableOpacity onPress={() => 
-                this.props.navigation.navigate('EntryDetail', { entryId: item.deck })}>
-                <Text style={styles.deckTitle}>{item.deck}</Text>
-                <Text style={styles.deckCards}>{item.numberOfCards} card(s)</Text>
+        <DeckItemView>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('EntryDetail', { entryId: item.deck })}>
+                <DeckTitleText>{item.deck}</DeckTitleText>
+                <NumberOfCardsText>{item.numberOfCards} {item.numberOfCards > 1 ? 'cards' : 'card'}</NumberOfCardsText>
             </TouchableOpacity>
-        </View>
+        </DeckItemView>    
     )
 
     render() {
         return (
-            <View style={styles.mainContainer}>
+            <MainContainerView>
 
                 <FlatList
                     data={[
@@ -37,67 +38,61 @@ export default class App extends React.Component {
                     keyExtractor={this.keyExtractor} 
                     renderItem={this.renderItem} />
 
-                <TouchableOpacity activeOpacity={0.5} style={styles.touchableOpacityStyle} >
-                     <Image source={ require('../images/action-button.png')} style={styles.floatingButtonStyle} />
-                </TouchableOpacity>
+                <FloatingActionButton activeOpacity={0.5}>
+                     <FloatingActionButtonImage source={ require('../images/action-button.png')} />
+                </FloatingActionButton>
 
-            </View>
+            </MainContainerView>
         );
     }
 }
 
-const styles = StyleSheet.create({
- 
-    item: {
-        backgroundColor: white,
-        borderRadius: Platform.OS === 'ios' ? 16 : 4,
-        padding: 20,
-        marginLeft: 15,
-        marginRight: 15,
-        marginTop: 17,
-        alignItems: 'center', 
-        shadowRadius: 3,
-        shadowOpacity: 0.8,
-        shadowColor: 'rgba(0, 0, 0, 0.24)',
-        shadowOffset: {
-            width: 0,
-            height: 3
-        },
-    },
+const DeckItemView = styled.View`
+    background-color: ${white};
+    border-radius: ${Platform.OS === 'ios' ? 16 : 4};
+    padding: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    margin-bottom: 2px;
+    align-items: center;
+    shadow-radius: 3;
+    shadow-opacity: 0.8;
+    shadow-color: 'rgba(0, 0, 0, 0.24)';
+    shadow-offset: 0px 3px;
+`
 
-    mainContainer: {
-        flex: 1,
-        backgroundColor : '#F5F5F5'
-    },
+const MainContainerView = styled.View`
+    flex: 1;
+    backgroundColor : #F5F5F5;
+` 
 
-    deckTitle: {
-        fontSize: 25, 
-        // fontWeight: 'bold',
-        paddingTop: 20,
-        textAlign: 'center'
-    },
+const DeckTitleText = styled.Text`
+    font-size: 25px;
+    padding-top: 20px;
+    text-align: center;
+`
 
-    deckCards: {
-        fontSize: 20, 
-        paddingTop: 10, 
-        paddingBottom: 20, 
-        color: gray, 
-        textAlign: 'center'
-    },
+const NumberOfCardsText = styled.Text`
+    font-size: 20px; 
+    padding-top: 10px; 
+    padding-bottom: 20px; 
+    color: ${gray};
+    text-align: center;
+`
 
-    touchableOpacityStyle:{
-        position: 'absolute',
-        width: 75,
-        height: 75,
-        alignItems: 'center',
-        justifyContent: 'center',
-        right: 30,
-        bottom: 30
-    },
-   
-    floatingButtonStyle: {
-        resizeMode: 'contain',
-        width: 75,
-        height: 75,
-    }
-});
+const FloatingActionButton = styled.TouchableOpacity`
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    align-items: center;
+    justify-content: center;
+    right: 20px;
+    bottom: 20px;  
+`
+
+const FloatingActionButtonImage = styled.Image`
+    resize-mode: contain;
+    width: 75px;
+    height: 75px;
+`
