@@ -5,6 +5,9 @@ import { createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import { darkPurple, purple, white } from './utils/colors'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
 
 function AppStatusBar ({backgroundColor, ...props}) {
 	return (
@@ -39,10 +42,12 @@ const MainNavigator = createStackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-		<View style={{ flex: 1 }}>
-			<AppStatusBar backgroundColor={darkPurple} barStyle="light-content" />
-			<MainNavigator />
-		</View>		
+		<Provider store={createStore(reducer)}>
+			<View style={{ flex: 1 }}>
+				<AppStatusBar backgroundColor={darkPurple} barStyle="light-content" />
+				<MainNavigator />
+			</View>
+		</Provider>	
     );
   }
 }

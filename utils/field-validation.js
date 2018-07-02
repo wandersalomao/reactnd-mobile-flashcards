@@ -1,0 +1,1 @@
+export const requiredValidation = value => (value ? undefined : 'This field is required')
