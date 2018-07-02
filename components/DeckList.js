@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Text, View, FlatList, TouchableOpacity, Image, Platform } from 'react-native'
 import { FlatList, TouchableOpacity, Platform } from 'react-native'
 import { white, gray } from '../utils/colors'
 import styled from 'styled-components'
@@ -17,10 +16,14 @@ export default class App extends React.Component {
         </DeckItemView>    
     )
 
+    onAddNewDeck = () => {
+        const { navigation } = this.props
+        navigation.navigate('NewDeck')
+    }
+
     render() {
         return (
             <MainContainerView>
-
                 <FlatList
                     data={[
                         {deck: 'This is deck 1', numberOfCards: 1},
@@ -38,7 +41,7 @@ export default class App extends React.Component {
                     keyExtractor={this.keyExtractor} 
                     renderItem={this.renderItem} />
 
-                <FloatingActionButton activeOpacity={0.5}>
+                <FloatingActionButton activeOpacity={0.5} onPress={this.onAddNewDeck}>
                      <FloatingActionButtonImage source={ require('../images/action-button.png')} />
                 </FloatingActionButton>
 

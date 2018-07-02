@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Constants } from 'expo'
 import { createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
+import NewDeck from './components/NewDeck'
 import { darkPurple, purple, white } from './utils/colors'
 
 function AppStatusBar ({backgroundColor, ...props}) {
@@ -17,11 +18,20 @@ const MainNavigator = createStackNavigator({
 	Home: {
 		screen: DeckList,
 		navigationOptions: {
-			title: "Decks", 
-			headerTintColor: white,
-			headerStyle: {
-				backgroundColor: purple,
-			}
+			title: "Decks"
+		}
+	}, 
+	NewDeck: {
+		screen: NewDeck,
+		navigationOptions: {
+			title: "New Deck"
+		}
+	}
+}, {
+	navigationOptions: {
+		headerTintColor: white,
+		headerStyle: {
+			backgroundColor: purple,
 		}
 	}
 })
