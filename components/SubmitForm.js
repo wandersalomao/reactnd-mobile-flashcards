@@ -36,9 +36,13 @@ class SubmitForm extends React.Component {
         const { isFormValid } = this.state
         
         return (
-            <ContainerView style={{ width: '100%' }}>
+            <ContainerView>
                 {this.props.children}
-                <SubmitButton disabled={!isFormValid} style={ isFormValid ? { backgroundColor: green } : { backgroundColor: gray }} onPress={handleSubmit(onSubmitForm)}>
+                <SubmitButton 
+                        onPress={handleSubmit(onSubmitForm)}
+                        disabled={!isFormValid} 
+                        style={ isFormValid ? { backgroundColor: green } : { backgroundColor: gray }}>
+                    
                     <SubmitButtonText>{buttonText}</SubmitButtonText>
                 </SubmitButton>
             </ContainerView>

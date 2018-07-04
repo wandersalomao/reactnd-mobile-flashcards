@@ -2,18 +2,25 @@ import React from 'react'
 import styled from 'styled-components'
 import { white, gray, green } from '../utils/colors'
 import { Field } from 'redux-form'
+import { connect } from 'react-redux'
 import { requiredValidation } from '../utils/field-validation'
 import InputField from './InputField'
 import SubmitForm from './SubmitForm'
 import { SubmissionError } from 'redux-form'
+import { NavigationActions } from 'react-navigation'
+import { handleSaveDeck } from '../actions/actions'
 
-export default class NewDeck extends React.Component {
+class NewDeck extends React.Component {
 
     onSubmit = (values) => {
-        console.log(values)
-        throw new SubmissionError({ title: 'This is an error', _error: 'Error failed!' })
-        // const { username, name } = values
-        // dispatch(register(username, name))
+        const { title } = values
+        const { dispatch, navigation, currentDeckTitles } = this.props
+
+        if (currentDeckTitles.includes(title)) {
+            throw new SubmissionError({ title: 'This deck title already exists', _error: 'Title already exists' })
+        } else {
+            dispatch(handleSaveDeck(title, navigation))
+        }
     }
 
     render() {
@@ -21,9 +28,9 @@ export default class NewDeck extends React.Component {
             <ContainerView>
                 <TitleText>What is the title of yout new Deck?</TitleText>
                 
-                <SubmitForm 
+                <SubmitForm
                     form="newDeck"
-                    buttonText="Register"
+                    buttonText="Save"
                     onSubmitForm={(values) => this.onSubmit(values)}>
 
                     <Field 
@@ -32,12 +39,6 @@ export default class NewDeck extends React.Component {
                         placeholder="Title"
                         validate={[requiredValidation]} />
                 </SubmitForm>
-
-                {/* <TitleTextInput placeholder="Title" underlineColorAndroid='transparent'/>
-                
-                <SubmitButton onPress={() => this.props.navigation.navigate('EntryDetail')}>
-                    <SubmitButtonText>Submit</SubmitButtonText>
-                </SubmitButton> */}
             </ContainerView>
         )
     }
@@ -63,3 +64,13 @@ const TitleTextInput = styled.TextInput`
     border-color: ${gray}    
     background-color: ${white}
 `
+
+function mapStateToProps(state) {
+    const { decks } = state
+
+    return {
+        currentDeckTitles: Object.keys(decks).map( id => decks[id].title )
+    }
+}
+
+export default connect(mapStateToProps)(NewDeck)

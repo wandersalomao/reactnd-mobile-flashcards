@@ -8,6 +8,7 @@ import { darkPurple, purple, white } from './utils/colors'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
+import middleware from './middleware'
 
 function AppStatusBar ({backgroundColor, ...props}) {
 	return (
@@ -42,7 +43,7 @@ const MainNavigator = createStackNavigator({
 export default class App extends React.Component {
   render() {
     return (
-		<Provider store={createStore(reducer)}>
+		<Provider store={createStore(reducer, middleware)}>
 			<View style={{ flex: 1 }}>
 				<AppStatusBar backgroundColor={darkPurple} barStyle="light-content" />
 				<MainNavigator />

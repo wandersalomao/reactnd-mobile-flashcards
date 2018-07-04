@@ -1,16 +1,30 @@
 import React from 'react'
-import { FlatList, TouchableOpacity, Platform } from 'react-native'
+import { connect } from 'react-redux'
+import { FlatList, TouchableOpacity, Platform, View, Text, Dimensions } from 'react-native'
 import { white, gray } from '../utils/colors'
 import styled from 'styled-components'
+import { handleInitialData } from '../actions/actions'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-export default class App extends React.Component {
+const EmptyList = () => (
+    <EmptyContainerView>
+        <MaterialCommunityIcons
+            style={{ padding: 40 }}
+            name='cards-outline'
+            size={85}/>
+        <Text style={{ fontSize: 30, padding: 10  }}>No Decks yet</Text>
+        <Text style={{ fontSize: 20  }}>Tap the Add button to add your first Deck</Text>
+    </EmptyContainerView>
+)
 
-    keyExtractor = (item, index) => item.deck
+class DeckList extends React.Component {
+
+    keyExtractor = (item, index) => item.id
 
     renderItem = ({ item }) => (
         <DeckItemView>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('EntryDetail', { entryId: item.deck })}>
-                <DeckTitleText>{item.deck}</DeckTitleText>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('EntryDetail', { entryId: item.id })}>
+                <DeckTitleText>{item.title}</DeckTitleText>
                 <NumberOfCardsText>{item.numberOfCards} {item.numberOfCards > 1 ? 'cards' : 'card'}</NumberOfCardsText>
             </TouchableOpacity>
         </DeckItemView>    
@@ -21,23 +35,18 @@ export default class App extends React.Component {
         navigation.navigate('NewDeck')
     }
 
+    componentDidMount() {
+        this.props.dispatch(handleInitialData())
+    }
+
     render() {
+        const { decks } = this.props
+
         return (
             <MainContainerView>
                 <FlatList
-                    data={[
-                        {deck: 'This is deck 1', numberOfCards: 1},
-                        {deck: 'This is deck 2', numberOfCards: 2},
-                        {deck: 'This is deck 3', numberOfCards: 3},
-                        {deck: 'This is deck 4', numberOfCards: 4},
-                        {deck: 'This is deck 5', numberOfCards: 5},
-                        {deck: 'This is deck 6', numberOfCards: 6},
-                        {deck: 'This is deck 7', numberOfCards: 7},
-                        {deck: 'This is deck 8', numberOfCards: 8},
-                        {deck: 'This is deck 9', numberOfCards: 9},
-                        {deck: 'This is deck 10', numberOfCards: 10},
-                        {deck: 'This is deck 11', numberOfCards: 11},
-                    ]} 
+                    data={decks}
+                    ListEmptyComponent={EmptyList}
                     keyExtractor={this.keyExtractor} 
                     renderItem={this.renderItem} />
 
@@ -49,6 +58,13 @@ export default class App extends React.Component {
         );
     }
 }
+
+const EmptyContainerView = styled.View`
+    flex-grow: 1; 
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`
 
 const DeckItemView = styled.View`
     background-color: ${white};
@@ -99,3 +115,21 @@ const FloatingActionButtonImage = styled.Image`
     width: 75px;
     height: 75px;
 `
+
+function mapStateToProps(state) {
+    const { decks } = state
+
+    return {
+        decks: Object.keys(decks)
+            .map( id => {
+                return {
+                    id: id, 
+                    title: decks[id].title, 
+                    numberOfCards: decks[id].cards.length
+                }
+            })
+            .sort((a, b) => a.title.localeCompare(b.title) )
+    }
+}
+
+export default connect(mapStateToProps)(DeckList)
