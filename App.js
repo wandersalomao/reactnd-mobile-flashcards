@@ -4,6 +4,8 @@ import { Constants } from 'expo'
 import { createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
+import NewCard from './components/NewCard'
+import DeckDetails from './components/DeckDetails'
 import { darkPurple, purple, white } from './utils/colors'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -29,6 +31,18 @@ const MainNavigator = createStackNavigator({
 		screen: NewDeck,
 		navigationOptions: {
 			title: "New Deck"
+		}
+	}, 
+	DeckDetails: {
+		screen: DeckDetails,
+		navigationOptions: {
+			title: "Deck Details"
+		}
+	},
+	NewCard: {
+		screen: NewCard,
+		navigationOptions: {
+			title: "New Card"
 		}
 	}
 }, {

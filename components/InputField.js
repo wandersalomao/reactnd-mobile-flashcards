@@ -28,6 +28,8 @@ const TitleTextInput = styled.TextInput`
     height: 50px;
     border-radius: 5;
     padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-color: ${gray}    
     background-color: ${white}
 `

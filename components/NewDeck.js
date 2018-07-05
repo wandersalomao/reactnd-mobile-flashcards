@@ -56,15 +56,6 @@ const ContainerView = styled.View`
     align-items: center;
 `
 
-const TitleTextInput = styled.TextInput`
-    width: 100%;
-    height: 50px;
-    border-radius: 5;
-    padding: 10px;
-    border-color: ${gray}    
-    background-color: ${white}
-`
-
 function mapStateToProps(state) {
     const { decks } = state
 

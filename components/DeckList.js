@@ -5,6 +5,8 @@ import { white, gray } from '../utils/colors'
 import styled from 'styled-components'
 import { handleInitialData } from '../actions/actions'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { DeckTitleText, NumberOfCardsText } from './styled-components'
+import { getNumberOfCardsText } from '../utils/helpers'
 
 const EmptyList = () => (
     <EmptyContainerView>
@@ -23,16 +25,15 @@ class DeckList extends React.Component {
 
     renderItem = ({ item }) => (
         <DeckItemView>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('EntryDetail', { entryId: item.id })}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckDetails', { deckId: item.id })}>
                 <DeckTitleText>{item.title}</DeckTitleText>
-                <NumberOfCardsText>{item.numberOfCards} {item.numberOfCards > 1 ? 'cards' : 'card'}</NumberOfCardsText>
+                <NumberOfCardsText>{getNumberOfCardsText(item)}</NumberOfCardsText>
             </TouchableOpacity>
         </DeckItemView>    
     )
 
     onAddNewDeck = () => {
-        const { navigation } = this.props
-        navigation.navigate('NewDeck')
+        this.props.navigation.navigate('NewDeck')
     }
 
     componentDidMount() {
@@ -86,20 +87,6 @@ const MainContainerView = styled.View`
     backgroundColor : #F5F5F5;
 ` 
 
-const DeckTitleText = styled.Text`
-    font-size: 25px;
-    padding-top: 20px;
-    text-align: center;
-`
-
-const NumberOfCardsText = styled.Text`
-    font-size: 20px; 
-    padding-top: 10px; 
-    padding-bottom: 20px; 
-    color: ${gray};
-    text-align: center;
-`
-
 const FloatingActionButton = styled.TouchableOpacity`
     position: absolute;
     width: 75px;
@@ -121,15 +108,20 @@ function mapStateToProps(state) {
 
     return {
         decks: Object.keys(decks)
-            .map( id => {
-                return {
-                    id: id, 
-                    title: decks[id].title, 
-                    numberOfCards: decks[id].cards.length
-                }
-            })
+            .map( id => decks[id] )
             .sort((a, b) => a.title.localeCompare(b.title) )
     }
+
+    // return {
+    //     decks: Object.keys(decks)
+    //         .map( id => {
+    //             return {
+    //                 ...decks[id], 
+    //                 numberOfCards: decks[id].cards.length
+    //             }
+    //         })
+    //         .sort((a, b) => a.title.localeCompare(b.title) )
+    // }
 }
 
 export default connect(mapStateToProps)(DeckList)
