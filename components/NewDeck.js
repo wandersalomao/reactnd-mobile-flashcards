@@ -8,7 +8,7 @@ import InputField from './InputField'
 import SubmitForm from './SubmitForm'
 import { SubmissionError } from 'redux-form'
 import { NavigationActions } from 'react-navigation'
-import { handleSaveDeck } from '../actions/actions'
+import { handleSaveDeck } from '../actions/deck_actions'
 
 class NewDeck extends React.Component {
 

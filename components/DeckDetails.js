@@ -7,27 +7,14 @@ import { getNumberOfCardsText } from '../utils/helpers'
 
 class DeckDetails extends React.Component {
 
-    // static navigationOptions = ({ navigation }) => {
-    //     const { screenTitle } = navigation.state.params
-    //     return {
-    //         title: screenTitle
-    //     }
-    // }
-
-    // componentDidMount() {
-    //     const { navigation, deck } = this.props
-    //     navigation.setParams({
-    //         screenTitle: deck.title
-    //     })
-    // }
-
     onAddNewCard = () => {
         const { navigation, deck } = this.props
         navigation.navigate('NewCard', { deckId: deck.id })
     }
 
     onStartQuiz = () => {
-        console.log('Start Quiz')
+        const { navigation, deck } = this.props
+        navigation.navigate('Quiz', { deckId: deck.id, currentCardIndex: 0 })
     }
 
     render() {

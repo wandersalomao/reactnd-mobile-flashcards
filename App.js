@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import NewCard from './components/NewCard'
+import Quiz from './components/Quiz'
 import DeckDetails from './components/DeckDetails'
 import { darkPurple, purple, white } from './utils/colors'
 import { createStore } from 'redux'
@@ -44,6 +45,9 @@ const MainNavigator = createStackNavigator({
 		navigationOptions: {
 			title: "New Card"
 		}
+	}, 
+	Quiz: {
+		screen: Quiz
 	}
 }, {
 	navigationOptions: {

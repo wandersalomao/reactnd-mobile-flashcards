@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { requiredValidation } from '../utils/field-validation'
 import InputField from './InputField'
 import SubmitForm from './SubmitForm'
-import { handleSaveCard } from '../actions/actions'
+import { handleSaveCard } from '../actions/card_actions'
 
 class NewCard extends React.Component {
 
