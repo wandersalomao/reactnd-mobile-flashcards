@@ -1,9 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { white, green, purple } from '../utils/colors'
+import { white, green, purple, gray } from '../utils/colors'
 import { DeckTitleText, NumberOfCardsText } from './styled-components'
 import { getNumberOfCardsText } from '../utils/helpers'
+import { handleStartQuiz } from '../actions/quiz_actions'
 
 class DeckDetails extends React.Component {
 
@@ -13,12 +14,13 @@ class DeckDetails extends React.Component {
     }
 
     onStartQuiz = () => {
-        const { navigation, deck } = this.props
-        navigation.navigate('Quiz', { deckId: deck.id, currentCardIndex: 0 })
+        const { dispatch, navigation } = this.props
+        dispatch(handleStartQuiz(navigation))
     }
 
     render() {
         const { deck } = this.props
+        const numberOfCards = deck.cards ? deck.cards.length : 0
 
         return (
             <MainContainerView>
@@ -28,7 +30,9 @@ class DeckDetails extends React.Component {
                 <AddCardButton onPress={this.onAddNewCard}>
                     <ButtonText>Add Card</ButtonText>
                 </AddCardButton>
-                <StartQuizButton onPress={this.onStartQuiz}>
+                <StartQuizButton onPress={this.onStartQuiz}
+                    disabled={numberOfCards <= 0} 
+                    style={ numberOfCards > 0 ? { backgroundColor: green } : { backgroundColor: gray }}>
                     <ButtonText>Start Quiz</ButtonText>
                 </StartQuizButton>
             </MainContainerView>

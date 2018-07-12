@@ -1,4 +1,4 @@
-import { ADD_QUIZ_ANSWER } from '../actions/action_types'
+import { ADD_QUIZ_ANSWER, CLEAR_QUIZ } from '../actions/action_types'
 
 export default function quiz(state = {}, action) {
     switch (action.type) {
@@ -8,6 +8,12 @@ export default function quiz(state = {}, action) {
             return {
                 ...state,
                 [deckId]: quizAnswers.concat([{ card: action.answer.cardId, isCorrect: action.answer.isCorrect }])
+            }
+        }
+        case CLEAR_QUIZ: {
+            return {
+                ...state, 
+                [action.deckId]: []
             }
         }
         default: {

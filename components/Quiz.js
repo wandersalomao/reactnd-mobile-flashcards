@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, View } from 'react-native'
+import { Animated, Platform } from 'react-native'
 import styled from 'styled-components'
 import { white, green, purple, red } from '../utils/colors'
 import { connect } from 'react-redux'
@@ -96,11 +96,11 @@ class Quiz extends React.Component {
         return (
             <MainContainerView>
                 <QuestionContainerView> 
-                    <FlipContainerView style={[frontAnimatedStyle]}>
+                    <FlipContainerView style={[frontAnimatedStyle, { opacity: Platform.OS === 'ios' ? 1 : this.frontOpacity }]}>
                         <QuestionAnswerText>{currentCard.question}</QuestionAnswerText>
                     </FlipContainerView>
 
-                    <FlipContainerBackView style={[backAnimatedStyle]}>
+                    <FlipContainerBackView style={[backAnimatedStyle, { opacity: Platform.OS === 'ios' ? 1 : this.backOpacity }]}>
                         <QuestionAnswerText>{currentCard.answer}</QuestionAnswerText>
                     </FlipContainerBackView>
                 </QuestionContainerView>

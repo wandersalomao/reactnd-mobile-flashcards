@@ -7,7 +7,8 @@ export function handleSaveDeck(title, navigation) {
             .then(
                 deck => {
                     dispatch(success(deck))
-                    navigation.goBack()
+                    navigation.replace('DeckDetails', { deckId: deck.id })
+                    //navigation.goBack()
                 }
             )
     }

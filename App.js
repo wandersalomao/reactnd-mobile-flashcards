@@ -6,12 +6,14 @@ import DeckList from './components/DeckList'
 import NewDeck from './components/NewDeck'
 import NewCard from './components/NewCard'
 import Quiz from './components/Quiz'
+import QuizResults from './components/QuizResults'
 import DeckDetails from './components/DeckDetails'
 import { darkPurple, purple, white } from './utils/colors'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware'
+import { setLocalNotification } from './utils/helpers'
 
 function AppStatusBar ({backgroundColor, ...props}) {
 	return (
@@ -48,6 +50,13 @@ const MainNavigator = createStackNavigator({
 	}, 
 	Quiz: {
 		screen: Quiz
+	}, 
+	QuizResults: {
+		screen: QuizResults, 
+		navigationOptions:  {
+			title: 'Quiz Results',
+			headerLeft: null // Disable the back button
+		}
 	}
 }, {
 	navigationOptions: {
@@ -59,14 +68,19 @@ const MainNavigator = createStackNavigator({
 })
 
 export default class App extends React.Component {
-  render() {
-    return (
-		<Provider store={createStore(reducer, middleware)}>
-			<View style={{ flex: 1 }}>
-				<AppStatusBar backgroundColor={darkPurple} barStyle="light-content" />
-				<MainNavigator />
-			</View>
-		</Provider>	
-    );
-  }
+
+	componentDidMount() {
+		setLocalNotification()
+	}
+
+  	render() {
+    	return (
+			<Provider store={createStore(reducer, middleware)}>
+				<View style={{ flex: 1 }}>
+					<AppStatusBar backgroundColor={darkPurple} barStyle="light-content" />
+					<MainNavigator />
+				</View>
+			</Provider>	
+    	);
+  	}
 }
