@@ -30,6 +30,8 @@ class DeckDetails extends React.Component {
                 <AddCardButton onPress={this.onAddNewCard}>
                     <ButtonText>Add Card</ButtonText>
                 </AddCardButton>
+
+                { /* The Start Quiz Button will only be available if the deck has more than 1 card. */ }
                 <StartQuizButton onPress={this.onStartQuiz}
                     disabled={numberOfCards <= 0} 
                     style={ numberOfCards > 0 ? { backgroundColor: green } : { backgroundColor: gray }}>

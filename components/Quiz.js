@@ -23,11 +23,12 @@ class Quiz extends React.Component {
         const { navigation, totalCards } = this.props
         const { currentCardIndex } = navigation.state.params
         navigation.setParams({
-            screenTitle: `Quiz: ${currentCardIndex + 1}/${totalCards}`
+            screenTitle: `Quiz: ${currentCardIndex + 1}/${totalCards}` // the screen title will be in the following format: Quiz: 1/2
         })
     }
 
     componentWillMount() {
+        // config parameters that will be used when flipping the question/answer card
         this.animatedValue = new Animated.Value(0);
         this.value = 0;
         this.animatedValue.addListener(({ value }) => {

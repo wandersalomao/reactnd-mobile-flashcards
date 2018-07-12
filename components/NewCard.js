@@ -48,21 +48,4 @@ const ContainerView = styled.View`
     align-items: center;
 `
 
-// function mapStateToProps(state, { navigation }) {
-//     const { deckId } = navigation.state.params
-//     const { decks } = state
-
-//     return {
-//         deck: decks[deckId]
-//     }
-// }
-
-// function mapStateToProps(state) {
-//     const { decks } = state
-
-//     return {
-//         currentDeckTitles: Object.keys(decks).map( id => decks[id].title )
-//     }
-// }
-
 export default connect()(NewCard)

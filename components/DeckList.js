@@ -8,6 +8,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { DeckTitleText, NumberOfCardsText } from './styled-components'
 import { getNumberOfCardsText } from '../utils/helpers'
 
+/**
+ * Component that will be rendered when the list of decks is empty
+ */
 const EmptyList = () => (
     <EmptyContainerView>
         <MaterialCommunityIcons
@@ -37,6 +40,7 @@ class DeckList extends React.Component {
     }
 
     componentDidMount() {
+        // load the initial data 
         this.props.dispatch(handleInitialData())
     }
 
@@ -111,17 +115,6 @@ function mapStateToProps(state) {
             .map( id => decks[id] )
             .sort((a, b) => a.title.localeCompare(b.title) )
     }
-
-    // return {
-    //     decks: Object.keys(decks)
-    //         .map( id => {
-    //             return {
-    //                 ...decks[id], 
-    //                 numberOfCards: decks[id].cards.length
-    //             }
-    //         })
-    //         .sort((a, b) => a.title.localeCompare(b.title) )
-    // }
 }
 
 export default connect(mapStateToProps)(DeckList)

@@ -16,7 +16,6 @@ export default class InputField extends React.Component {
                     onBlur={onBlur}
                     value={value}
                     {...restInput} />
-                    
                         {dirty && error && <ErrorText>{error}</ErrorText>}
             </View>
         );

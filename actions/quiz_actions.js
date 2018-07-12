@@ -1,6 +1,11 @@
 import { ADD_QUIZ_ANSWER, CLEAR_QUIZ } from './action_types'
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
+/**
+ * Action used to save an answer for a quiz question
+ * @param {*} answer - the answer object that contains the card id and the card answer. 
+ * @param {*} navigation - the navigation object that will be used to redirect the user to the next page
+ */
 export function handleSaveQuizAnswer(answer, navigation) {
     return (dispatch, getState) => {
         const { deckId, currentCardIndex } = navigation.state.params
@@ -22,6 +27,10 @@ export function handleSaveQuizAnswer(answer, navigation) {
     function success(answer) { return { type: ADD_QUIZ_ANSWER, answer } }
 }
 
+/**
+ * Action used to start a new Quiz. It can be used when starting the quiz for the first time or when retaking the quiz. 
+ * @param {*} navigation - the navigation object that will be used to redirect the user to the next page
+ */
 export function handleStartQuiz(navigation) {
     return (dispatch) => {
         const { deckId } = navigation.state.params

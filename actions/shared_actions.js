@@ -1,6 +1,9 @@
 import { LOAD_DECKS, LOAD_CARDS } from './action_types'
 import { getInitialData } from '../utils/api'
 
+/**
+ * Action used to load the initial data into the redux store
+ */
 export function handleInitialData() {
     return (dispatch) => {
         return getInitialData()
